@@ -37,6 +37,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third-party
+    "rest_framework",
+    "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
+    "drf_spectacular",
     # Local
     "accounts.apps.AccountsConfig",
     "courses.apps.CoursesConfig",
@@ -54,6 +63,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Third party middleware
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -106,6 +117,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# Authentication
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",  # Allow any request
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [  # For setting authentication mechanism
+        "rest_framework.authentication.TokenAuthentication",  #
+        "rest_framework.authentication.SessionAuthentication",  # Sessions needed for powering browsable API
+        # "rest_framework_simplejwt.authentication.JWTAuthentication", # JWT Authentication
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 50,
+}
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_SESSION_REMEMBER = True
+
+# Schema for API documentation
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Course Tracker API",
+    "DESCRIPTION": "API for tracking courses and lessons",
+    "VERSION": "1.0.0",
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

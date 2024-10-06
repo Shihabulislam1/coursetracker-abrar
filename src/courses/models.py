@@ -25,7 +25,7 @@ class CourseCategory(models.Model):
 
 class Course(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL)
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     url = models.URLField(blank=True)
@@ -44,7 +44,7 @@ class Course(models.Model):
 
 class LessonLog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
 
     duration = models.PositiveIntegerField()
     date = models.DateField()
