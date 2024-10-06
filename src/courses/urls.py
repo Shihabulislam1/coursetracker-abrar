@@ -30,9 +30,9 @@ urlpatterns = [
     ),
     path("", CourseListCreateAPIView.as_view(), name="courses"),
     path("<uuid:pk>/", CourseRetrieveUpdateDestroyAPIView.as_view(), name="course"),
-    path("lesson-logs/", LessonLogListCreateAPIView.as_view(), name="lesson-logs"),
+    path("logs/", LessonLogListCreateAPIView.as_view(), name="lesson-logs"),
     path(
-        "lesson-logs/<uuid:pk>/",
+        "logs/<uuid:pk>/",
         LessonLogRetrieveUpdateDestroyAPIView.as_view(),
         name="lesson-log",
     ),

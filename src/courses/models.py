@@ -46,7 +46,7 @@ class LessonLog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
 
-    duration = models.PositiveIntegerField()
+    unit = models.PositiveIntegerField()
     date = models.DateField()
 
     # Foreign Key. Null if deleted

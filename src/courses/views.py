@@ -52,10 +52,10 @@ class CourseListCreateAPIView(ListCreateAPIView):
 
         # if query parameter is not provided, return all courses
         if not q:
-            return Course.objects.filter(user=user)
+            return Course.objects.filter(user=user).order_by("name")
 
         # if query parameter is provided, filter courses by name
-        return Course.objects.filter(user=user, name__icontains=q)
+        return Course.objects.filter(user=user, name__icontains=q).order_by("name")
 
     @extend_schema(
         parameters=[
@@ -105,11 +105,25 @@ class LessonLogListCreateAPIView(ListCreateAPIView):
         # Filter by date_from and date_to
         date_from = self.request.query_params.get("date_from", None)
         date_to = self.request.query_params.get("date_to", None)
+        course_id = self.request.query_params.get("course_id", None)
 
-        if date_from and date_to and date_from <= date_to:
-            return LessonLog.objects.filter(user=user, date__range=[date_from, date_to])
+        # One queryset to rule them all
+        queryset = LessonLog.objects.filter(user=user).order_by("date")
 
-        return LessonLog.objects.filter(user=user)
+        if course_id:
+            queryset = queryset.filter(course_id=course_id)
+
+        # Filter by date_from
+        if date_from:
+            queryset = queryset.filter(date__gte=date_from)
+
+        # Filter by date_to
+        if date_to:
+            queryset = queryset.filter(date__lte=date_to)
+
+        # Filter by course_id
+
+        return queryset
 
     @extend_schema(
         parameters=[
@@ -124,6 +138,12 @@ class LessonLogListCreateAPIView(ListCreateAPIView):
                 type=str,
                 required=False,
                 description="Filter logs to this date",
+            ),
+            OpenApiParameter(
+                name="course_id",
+                type=str,
+                required=False,
+                description="Filter logs by course id",
             ),
         ]
     )
