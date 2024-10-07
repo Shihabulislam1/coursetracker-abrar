@@ -111,16 +111,15 @@ class LessonLogListCreateAPIView(ListCreateAPIView):
         queryset = LessonLog.objects.filter(user=user).order_by("date")
 
         if course_id:
-            queryset = queryset.filter(course_id=course_id)
+            queryset = queryset.filter(course_id=course_id).order_by("date")
 
         # Filter by date_from
         if date_from:
-            queryset = queryset.filter(date__gte=date_from)
+            queryset = queryset.filter(date__gte=date_from).order_by("date")
 
         # Filter by date_to
         if date_to:
-            queryset = queryset.filter(date__lte=date_to)
-
+            queryset = queryset.filter(date__lte=date_to).order_by("date")
         # Filter by course_id
 
         return queryset
