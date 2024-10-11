@@ -7,6 +7,8 @@
   - `venv/Scripts/activate`
 - Install requirements
   - `pip install -r requirements.txt`
+-Install Django Within Virtual Enviorenment
+  - `py -m pip install Django`
 - Start server
   - `cd src`
   - `python manage.py startserver`

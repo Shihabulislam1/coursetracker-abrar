@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # Local
     "accounts.apps.AccountsConfig",
     "courses.apps.CoursesConfig",
+    "corsheaders",
 ]
 
 
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Third party middleware
     "allauth.account.middleware.AccountMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -164,3 +166,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
